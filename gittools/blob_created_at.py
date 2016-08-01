@@ -9,6 +9,7 @@ import time
 
 GIT = sh.git
 LOG = logging.getLogger()
+DEFAULT_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 def find_loose_object(topdir, hash):
@@ -32,7 +33,9 @@ def find_packfile(topdir, want):
 @click.command()
 @click.option('-v', '--verbose', 'loglevel', flag_value='INFO')
 @click.option('-d', '--debug', 'loglevel', flag_value='DEBUG')
-@click.option('-f', '--format', default='%Y-%m-%d %H:%M:%S')
+@click.option('-f', '--format', default='%Y-%m-%d %H:%M:%S',
+              help='format string for strftime '
+              '(default is "%s")' % DEFAULT_TIME_FORMAT)
 @click.argument('hash')
 def cli(hash, loglevel='WARNING', format=None):
     logging.basicConfig(level=loglevel)
