@@ -1,3 +1,5 @@
 click
-sh
 pathlib2
+PyGitHub
+requests
+sh
