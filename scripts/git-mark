@@ -1,0 +1,32 @@
+#!/bin/bash
+
+OPT_MARK=$(git config --get mark.default || echo 'WIP')
+
+git_mark() {
+	exec git filter-branch -f --msg-filter \
+		'sed "1 { /^\['"$OPT_MARK"'] /! s/^/['"$OPT_MARK"'] / }"' \
+		"${@:-HEAD^..}"
+}
+
+git_unmark() {
+	exec git filter-branch -f --msg-filter \
+		'sed "1 s/^\['"$OPT_MARK"'] //"' "${@:-HEAD^..}"
+}
+
+while getopts 'm:' ch; do
+	case $ch in
+	(m)	OPT_MARK=$OPTARG
+		;;
+	esac
+done
+shift $(( $OPTIND - 1 ))
+
+cd $(git rev-parse --show-toplevel)
+
+case $0 in
+	(*git-mark)	git_mark;;
+	(*git-unmark)	git_unmark;;
+	(*)		echo "ERROR: don't know what to do." >&2
+			exit 1
+			;;
+esac
