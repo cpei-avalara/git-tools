@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+export GIT_EDITOR=cat
+rev=$(git rev-parse "$1") &&
+git commit --fixup "$rev" &&
+git rebase -i --autosquash "${rev}^"
