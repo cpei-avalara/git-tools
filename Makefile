@@ -6,10 +6,13 @@ SCRIPTS = \
 	git-fixup \
 	git-mark
 
+INSTALL = install
+
 all:
 
 install: all
+	$(INSTALL) -m 755 -d $(bindir)
 	for script in $(SCRIPTS); do \
-		install -m 755 $$script $(bindir)/; \
+		$(INSTALL) -m 755 $$script $(bindir)/; \
 	done
 	ln -sf git-mark $(bindir)/git-unmark
