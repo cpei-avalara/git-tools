@@ -1,0 +1,33 @@
+#!/bin/bash
+
+use_commit=0
+
+while [[ $# -ge 1 ]]; do
+	case $1 in
+	(--commit|-c)
+		use_commit=1
+		shift
+		;;
+
+	(--)	shift
+		break
+		;;
+
+	(-*)	echo "error: unknown option: $1" >&2
+		exit 2
+		;;
+
+	(*)	break
+		;;
+	esac
+done
+
+ref=${1:-HEAD}
+
+if [[ $use_commit -eq 1 ]]; then
+	${VISUAL:-vim} -p $(git diff-tree --no-commit-id --name-only -r $ref)
+elif ! git diff --quiet $ref; then
+	${VISUAL:-vim} -p $(git diff --name-only $ref)
+else
+	echo "No work to resume."
+fi

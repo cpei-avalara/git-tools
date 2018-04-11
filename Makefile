@@ -4,7 +4,8 @@ bindir = $(prefix)/bin
 SCRIPTS = \
 	git-edit \
 	git-fixup \
-	git-mark
+	git-mark \
+	git-resume
 
 INSTALL = install
 
