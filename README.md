@@ -2,7 +2,7 @@
 
 - `git-edit`
 
-  Uses `git rebase` to edit a particular command. When you are
+  Uses `git rebase` to edit a particular commit. When you are
   finished editing, run `git rebase --continue`.
 
 - `git-fixup`
